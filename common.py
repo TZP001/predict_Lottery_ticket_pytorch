@@ -32,7 +32,7 @@ class FocalLoss(nn.Module):
         self.alpha = alpha
 
     def forward(self, inputs, targets):
-        # 输入：inputs (模型预测，shape: [batch_size, num_classes]), 
+        # 输入：inputs (模型预测，shape: [batch_size, num_classes]),
         # targets (真实标签，shape: [batch_size, num_classes], 独热编码)
 
         BCE_loss = F.binary_cross_entropy_with_logits(inputs, targets, reduction='none')
@@ -87,7 +87,7 @@ def create_train_data(name, windows, dataset=0, ball_type="red", cq=0, test_flag
         for item in _data:
            _tmp.append([item])
         tmp.append(_tmp)
-    data = np.array(tmp)       
+    data = np.array(tmp)
     cut_num = model_args[name]["model_args"]["red_sequence_len"]
     if dataset == 0:
         x_data, y_data = [], []
@@ -183,7 +183,7 @@ def spider_cq(name="kl8", start=1, end=999999, mode="train", windows_size=0):
             # item[u"id"] = line[0]
             strdate = line[1].split('-')
             item[u"日期"] = strdate[0] + strdate[1] + strdate[2]
-            item[u"期数"] = line[0]  
+            item[u"期数"] = line[0]
             for i in range(1, 21):
                 item[u"红球_{}".format(i)] = line[i + 1]
             data.append(item)
@@ -191,7 +191,7 @@ def spider_cq(name="kl8", start=1, end=999999, mode="train", windows_size=0):
         df.to_csv("{}{}".format(syspath, data_cq_file_name), encoding="utf-8",index=False)
         return pd.DataFrame(data)
     elif name == "kl8" and mode == "predict":
-        ori_data = pd.read_csv("{}{}".format(syspath, data_cq_file_name))  
+        ori_data = pd.read_csv("{}{}".format(syspath, data_cq_file_name))
         data = []
         if windows_size > 0:
             ori_data = ori_data[0:windows_size]
@@ -225,7 +225,7 @@ def spider(name="ssq", start=1, end=999999, mode="train", windows_size=0):
         soup = BeautifulSoup(r.text, "lxml")
         if name in ["ssq", "dlt", "kl8"]:
             trs = soup.find("tbody", attrs={"id": "tdata"}).find_all("tr")
-        elif name in ["qxc", "pls"]:
+        elif name in ["qxc", "pls", "sd"]:
             trs = soup.find("div", class_="wrap_datachart").find("table", id="tablelist").find_all("tr")
         data = []
         for tr in trs:
@@ -243,12 +243,19 @@ def spider(name="ssq", start=1, end=999999, mode="train", windows_size=0):
                 for j in range(2):
                     item[u"蓝球_{}".format(j+1)] = tr.find_all("td")[6+j].get_text().strip()
                 data.append(item)
-            elif name == "pls":
+            elif name in ["pls", "sd", "qxc"]:
+                if len(tr.find_all("td")) < 2:
+                    continue
                 if tr.find_all("td")[0].get_text().strip() == "注数" or tr.find_all("td")[1].get_text().strip() == "中奖号码":
                     continue
                 item[u"期数"] = tr.find_all("td")[0].get_text().strip()
                 numlist = tr.find_all("td")[1].get_text().strip().split(" ")
-                for i in range(3):
+                # if name == "qxc":
+                #     red_nums = 7
+                # elif name in ["pls", "sd"]:
+                #     red_nums = 3
+                red_nums = len(numlist)
+                for i in range(red_nums):
                     item[u"红球_{}".format(i+1)] = numlist[i]
                 data.append(item)
             elif name == "kl8":
@@ -270,7 +277,7 @@ def spider(name="ssq", start=1, end=999999, mode="train", windows_size=0):
         return pd.DataFrame(data)
 
     elif mode == "predict":
-        ori_data = pd.read_csv("{}{}".format(syspath, data_file_name))  
+        ori_data = pd.read_csv("{}{}".format(syspath, data_file_name))
         data = []
         if windows_size > 0:
             ori_data = ori_data[0:windows_size]
