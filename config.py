@@ -32,9 +32,17 @@ name_path = {
         "name": "排列三",
         "path": "data/pls/"
     },
+    "plw": {
+        "name": "排列五",
+        "path": "data/plw/"
+    },
     "kl8": {
         "name": "快乐8",
         "path": "data/kl8/"
+    },
+    "sd": {
+        "name": "福彩3D",
+        "path": "data/sd/"
     },
 }
 
@@ -121,6 +129,46 @@ model_args = {
             "blue": "/blue_ball_model/"
         }
     },
+    "plw": {
+        "model_args": {
+            "windows_size": 3,
+            "batch_size": 1,
+            "red_sequence_len": 5,
+            "sequence_len": 5,
+            "red_n_class": 10,
+            "red_epochs": 1,
+            "red_embedding_size": 10,
+            "red_hidden_size": 10,
+            "red_layer_size": 1,
+            "blue_sequence_len": 1,
+            "blue_n_class": 0,
+            "blue_epochs": 0,
+            "blue_embedding_size": 0,
+            "blue_hidden_size": 0,
+            "blue_layer_size": 0,
+        },
+        "train_args": {
+            "red_learning_rate": 0.001,
+            "red_beta1": 0.9,
+            "red_beta2": 0.999,
+            "red_epsilon": 1e-08,
+            "blue_learning_rate": 0.001,
+            "blue_beta1": 0.9,
+            "blue_beta2": 0.999,
+            "blue_epsilon": 1e-08
+        },
+        "path": {
+            "red": model_path + "/plw/red_ball_model/",
+            "blue": model_path + "/plw/blue_ball_model/"
+        },
+        "pathname": {
+            "name": "/plw/"
+        },
+        "subpath": {
+            "red": "/red_ball_model/",
+            "blue": "/blue_ball_model/"
+        }
+    },
     "ssq": {
         "model_args": {
             "windows_size": 3,
@@ -194,6 +242,86 @@ model_args = {
         },
         "pathname": {
             "name":"/dlt/"
+        },
+        "subpath": {
+            "red": "/red_ball_model/",
+            "blue": "/blue_ball_model/"
+        }
+    },
+    "sd": {
+        "model_args": {
+            "windows_size": 3,
+            "batch_size": 1,
+            "red_sequence_len": 3,
+            "sequence_len": 3,
+            "red_n_class": 10,
+            "red_epochs": 1,
+            "red_embedding_size": 10,
+            "red_hidden_size": 10,
+            "red_layer_size": 1,
+            "blue_sequence_len": 1,
+            "blue_n_class": 0,
+            "blue_epochs": 0,
+            "blue_embedding_size": 0,
+            "blue_hidden_size": 0,
+            "blue_layer_size": 0,
+        },
+        "train_args": {
+            "red_learning_rate": 0.001,
+            "red_beta1": 0.9,
+            "red_beta2": 0.999,
+            "red_epsilon": 1e-08,
+            "blue_learning_rate": 0.001,
+            "blue_beta1": 0.9,
+            "blue_beta2": 0.999,
+            "blue_epsilon": 1e-08
+        },
+        "path": {
+            "red": model_path + "/sd/red_ball_model/",
+            "blue": model_path + "/sd/blue_ball_model/"
+        },
+        "pathname": {
+            "name":"/sd/"
+        },
+        "subpath": {
+            "red": "/red_ball_model/",
+            "blue": "/blue_ball_model/"
+        }
+    },
+    "qxc": {
+        "model_args": {
+            "windows_size": 3,
+            "batch_size": 1,
+            "red_sequence_len": 6,
+            "sequence_len": 6,
+            "red_n_class": 10,
+            "red_epochs": 1,
+            "red_embedding_size": 10,
+            "red_hidden_size": 10,
+            "red_layer_size": 1,
+            "blue_sequence_len": 1,
+            "blue_n_class": 15,
+            "blue_epochs": 1,
+            "blue_embedding_size": 15,
+            "blue_hidden_size": 15,
+            "blue_layer_size": 1,
+        },
+        "train_args": {
+            "red_learning_rate": 0.001,
+            "red_beta1": 0.9,
+            "red_beta2": 0.999,
+            "red_epsilon": 1e-08,
+            "blue_learning_rate": 0.001,
+            "blue_beta1": 0.9,
+            "blue_beta2": 0.999,
+            "blue_epsilon": 1e-08
+        },
+        "path": {
+            "red": model_path + "/qxc/red_ball_model/",
+            "blue": model_path + "/qxc/blue_ball_model/"
+        },
+        "pathname": {
+            "name":"/qxc/"
         },
         "subpath": {
             "red": "/red_ball_model/",
